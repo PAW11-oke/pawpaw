@@ -1,6 +1,9 @@
+import Artikel from "@/components/landing/Artikel";
+import Galeri from "@/components/landing/Galeri";
+
 export default function Home() {
   return (
-    <div>
+    <div className="relative h-fit overflow-hidden">
       <section className="relative flex flex-col items-center justify-center min-h-screen p-8 sm:flex-row sm:p-20 gap-8 font-medium text-2xl bg-[#FFBCC3]/25">
         <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
           <img src="/Cat.png" alt="Cat" className="h-auto max-h-[70vh]" />
@@ -33,8 +36,7 @@ export default function Home() {
           ].map((feature, index) => (
             <div
               key={index}
-              className="bg-[#FFFFFF] p-6 rounded-[25px] drop-shadow-2xl text-center transition-transform transform hover:scale-105"
-            >
+              className="bg-[#FFFFFF] p-6 rounded-[25px] drop-shadow-2xl text-center transition-transform transform hover:scale-105">
               <div className="text-4xl mb-4">
                 <img
                   src={feature.icon}
@@ -55,6 +57,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <Galeri />
+      <Artikel />
     </div>
   );
 }
