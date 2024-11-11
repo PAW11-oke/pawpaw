@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
+import Navbar from "@/components/landing/Navbar";
 
 // Configure Poppins with bold and medium weights, including italics
 const poppins = Poppins({
@@ -16,7 +17,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <Navbar /> {/* Include Navbar here */}
+        {children}
+      </body>
     </html>
   );
 }
