@@ -1,3 +1,4 @@
+import AddPet from "@/components/landing/AddPet";
 import Artikel from "@/components/landing/Artikel";
 import Galeri from "@/components/landing/Galeri";
 
@@ -24,6 +25,7 @@ export default function Home() {
         </div>
       </section>
 
+      <AddPet />
       <section className="p-12">
         <h2 className="text-4xl font-bold text-center mb-8 text-[#FFBCC3]">
           Our Features
@@ -57,7 +59,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-
+      
       <Galeri />
       <Artikel />
     </div>
