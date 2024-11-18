@@ -25,7 +25,7 @@ const articles = [
 
 const Artikel = () => {
   return (
-    <div className="relative flex flex-col w-screen justify-center items-center gap-y-10 max-w-full h-[600px] overflow-clip">
+    <div id="Artikel" className="relative flex flex-col w-screen justify-center items-center gap-y-10 max-w-full h-[600px] overflow-clip">
       <h2 className="text-pink-main font-bold text-5xl">Useful Pet Article</h2>
       <div className="w-[80vw] relative h-fit flex gap-x-10">
         {articles.map(({ title, description, img, url }, index) => (

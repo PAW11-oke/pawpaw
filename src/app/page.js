@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import AddPet from "@/components/landing/AddPet";
 import Artikel from "@/components/landing/Artikel";
 import Galeri from "@/components/landing/Galeri";
@@ -32,30 +34,32 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: "Grooming Schedule", icon: "/icons/Scissors.png" },
-            { title: "Health Tracking", icon: "/icons/Medkit.png" },
-            { title: "Community Chat", icon: "/icons/Paw.png" },
+            { title: "Grooming Schedule", icon: "/icons/Scissors.png", href: "/grooming" },
+            { title: "Health Tracking", icon: "/icons/Medkit.png", href: "/health-tracking"},
+            { title: "Community Chat", icon: "/icons/Paw.png", href: "/community" },
           ].map((feature, index) => (
-            <div
-              key={index}
-              className="bg-[#FFFFFF] p-6 rounded-[25px] drop-shadow-2xl text-center transition-transform transform hover:scale-105">
-              <div className="text-4xl mb-4">
-                <img
-                  src={feature.icon}
-                  alt={`${feature.title} icon`}
-                  className="h-16 w-16 mx-auto"
-                />
+            <Link key={index} href={feature.href} passHref>
+              <div
+                key={index}
+                className="bg-[#FFFFFF] p-6 rounded-[25px] drop-shadow-2xl text-center transition-transform transform hover:scale-105">
+                <div className="text-4xl mb-4">
+                  <img
+                    src={feature.icon}
+                    alt={`${feature.title} icon`}
+                    className="h-16 w-16 mx-auto"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-[#FFBCC3]">
+                  {feature.title}
+                </h3>
+                <p className="text-[#FFBCC3]">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting
+                  industry. Lorem Ipsum has been the industry's standard dummy
+                  text ever since the 1500s, when an unknown printer took a galley
+                  of type and scrambled it to make a type specimen book.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-[#FFBCC3]">
-                {feature.title}
-              </h3>
-              <p className="text-[#FFBCC3]">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
-              </p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
