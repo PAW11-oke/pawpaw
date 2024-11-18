@@ -46,8 +46,8 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-[50px] text-[18px]">
           <Link href="/" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Home</Link>
           <Link href="#AddPet" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">My Pet</Link>
-          <Link href="#Gallery" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Gallery</Link>
-          <Link href="#Article" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Article</Link>
+          <Link href="#Galeri" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Gallery</Link>
+          <Link href="#Artikel" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Article</Link>
         </div>
 
         <div className="hidden md:flex space-x-[14px] text-[16px]">
@@ -63,7 +63,7 @@ export default function Navbar() {
           <button onClick={toggleMenu} className="text-[#F3AAB5]">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
+            </svg>1
           </button>
         </div>
       </div>
@@ -72,8 +72,8 @@ export default function Navbar() {
         <div className="md:hidden px-4 py-2 bg-white/90 backdrop-blur-lg space-y-2 text-[16px]">
           <Link href="/" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Home</Link>
           <Link href="#AddPet" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">My Pet</Link>
-          <Link href="#Gallery" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Gallery</Link>
-          <Link href="#Article" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Article</Link>
+          <Link href="#Galeri" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Gallery</Link>
+          <Link href="#Artikel" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Article</Link>
         </div>
       )}
     </nav>

@@ -11,7 +11,7 @@ const gallery_images_path = [
 
 const Galeri = () => {
   return (
-    <div className="relative flex flex-col w-screen justify-center items-center gap-y-10 max-w-full h-[600px] bg-pink-main overflow-clip rounded-2xl">
+    <div id="Galeri" className="relative flex flex-col w-screen justify-center items-center gap-y-10 max-w-full h-[600px] bg-pink-main overflow-clip rounded-2xl">
       <h2 className="text-white font-bold text-5xl">Gallery</h2>
       <div className="w-[80vw] relative h-fit flex gap-x-6">
         {gallery_images_path.map((value, index) => (
