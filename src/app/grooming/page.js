@@ -25,7 +25,7 @@ export default function Grooming() {
       </header>
 
       {/* Schedule Section */}
-      <section className="p-6 sm:p-12 min-h-[500px] relative mt-8">
+      <section className="p-6 sm:p-12 min-h-[500px] relative mt-2">
         <h2 className="flex items-center gap-2 text-3xl font-bold text-[#FFBCC3] ml-16">
           {/* Ikon Clock */}
           <img 
