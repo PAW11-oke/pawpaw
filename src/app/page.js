@@ -14,7 +14,8 @@ export default function Home() {
 
         <div className="text-center z-10">
           <h1 className="text-[90px] font-bold text-[#F3AAB5] mb-4 leading-tight">
-            Welcome to PawPaw!
+            Welcome to <br />
+            PawPaw!
           </h1>
           <p className="text-[#F3AAB5] text-[16px] max-w-[600px] mx-auto">
             Hai, Pawrents! Yuk, catat perjalanan si furry friend dengan mudah
@@ -30,8 +31,7 @@ export default function Home() {
       <AddPet />
       <section
         id="Features"
-        className="p-12 flex items-center justify-center min-h-screen sah"
-      >
+        className="p-12 flex items-center justify-center min-h-screen sah">
         <div>
           <h2 className="text-4xl font-bold text-center mb-8 text-[#FFBCC3]">
             Our Features
@@ -63,8 +63,7 @@ export default function Home() {
               <Link key={index} href={feature.href} passHref>
                 <div
                   key={index}
-                  className="bg-[#FFFFFF] p-6 rounded-[25px] flex items-center gap-6 shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] transition-transform transform hover:scale-105"
-                >
+                  className="bg-[#FFFFFF] p-6 rounded-[25px] flex items-center gap-6 shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] transition-transform transform hover:scale-105">
                   {/* Icon di sisi kiri */}
                   <div className="flex-shrink-0">
                     <img
@@ -78,7 +77,9 @@ export default function Home() {
                     <h3 className="text-[24px] font-bold mb-2 text-[#FFBCC3]">
                       {feature.title}
                     </h3>
-                    <p className="text-[#9E9E9E] text-[14px]">{feature.description}</p>
+                    <p className="text-[#9E9E9E] text-[14px]">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -87,9 +88,6 @@ export default function Home() {
         </div>
       </section>
 
-
-
-      
       <Galeri />
       <Artikel />
     </div>
