@@ -6,10 +6,11 @@ import { LuPencilLine } from "react-icons/lu";
 import { useState } from "react";
 import Image from "next/image";
 
-const AddProfilePhoto = () => {
+const Profile = () => {
   const [profilePhoto, setProfilePhoto] = useState(
     "/DefaultProfilePicture.png"
   );
+  const [name, setName] = useState("");
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -22,12 +23,14 @@ const AddProfilePhoto = () => {
     }
   };
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
   return (
     <div className="relative w-screen max-w-full h-[95vh] py-40 overflow-x-clip grid place-content-center mt-10">
       <div className="h-fit py-6 px-8 w-[440px] flex flex-col items-center gap-y-6 rounded-[32px] border-[#CBD5E1] border-2 shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] z-0">
-        <h1 className="font-bold text-3xl text-black">
-          Add Your Profile Photo!
-        </h1>
+        <h1 className="font-bold text-3xl text-black">Your Pawrent Profile</h1>
 
         {/* Profile photo container */}
         <div className="relative">
@@ -55,6 +58,23 @@ const AddProfilePhoto = () => {
           />
         </div>
 
+        {/* Name Input */}
+        <div className="w-full">
+          <label
+            htmlFor="nameInput"
+            className="block text-gray-700 font-bold mb-2">
+            Your Name:
+          </label>
+          <input
+            id="nameInput"
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+            placeholder="Your name"
+            className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
+          />
+        </div>
+
         {/* Save button */}
         <Link
           href="/"
@@ -62,16 +82,9 @@ const AddProfilePhoto = () => {
           Save
           <MdOutlineSave className="text-lg text-white" />
         </Link>
-
-        {/* Skip button */}
-        <Link
-          href="/"
-          className="w-full flex justify-center items-center gap-x-2 text-pink-main font-bold bg-white rounded-full py-2 border-2 border-pink-main">
-          Skip for now
-        </Link>
       </div>
     </div>
   );
 };
 
-export default AddProfilePhoto;
+export default Profile;

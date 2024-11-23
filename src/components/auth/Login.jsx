@@ -31,7 +31,7 @@ const Login = () => {
               value={loginData}
               placeholder="youremail@gmail.com"
               spellCheck="false"
-              className="py-2 pl-14 flex items-center border-[#CBD5E1] border-2 rounded-full text-black text-base outline-none w-full"
+              className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
             />
             <MdOutlineEmail className="absolute left-4 bottom-1/2 translate-y-1/2 text-xl" />
           </div>
@@ -50,7 +50,7 @@ const Login = () => {
               value={loginData}
               placeholder="********"
               spellCheck="false"
-              className="py-2 pl-14 flex items-center border-[#CBD5E1] border-2 rounded-full text-black text-base outline-none w-full"
+              className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
             />
             <FiLock className="absolute left-4 bottom-1/2 translate-y-1/2 text-xl" />
           </div>

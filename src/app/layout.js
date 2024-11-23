@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { ScheduleProvider } from "@/context/ScheduleContext";
+import { PetProvider } from "@/context/PetContext";
 
 // Configure Poppins with bold and medium weights, including italics
 const poppins = Poppins({
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Navbar /> {/* Include Navbar here */}
-        <ScheduleProvider>{children}</ScheduleProvider>
-        <Footer key={Math.random()} /> {/* Tambahkan key dengan nilai acak */}
+        <Navbar />
+        <PetProvider>
+          <ScheduleProvider>{children}</ScheduleProvider>
+        </PetProvider>
+        <Footer key={Math.random()} />
       </body>
     </html>
   );
