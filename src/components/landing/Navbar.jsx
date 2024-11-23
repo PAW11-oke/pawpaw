@@ -51,10 +51,10 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex space-x-[14px] text-[16px]">
-          <Link href="/register">
+          <Link href="/auth/signup">
             <button className="bg-[#FFBCC3] text-white w-[105px] h-[40px] rounded-[56.76px] hover:font-bold transition-all duration-300 ease-in-out">Daftar</button>
           </Link>
-          <Link href="/login">
+          <Link href="/auth/login">
             <button className="bg-[#FBEBD4] text-[#F3AAB5] w-[105px] h-[40px]  rounded-[56.76px] hover:font-bold transition-all duration-300 ease-in-out">Masuk</button>
           </Link>
         </div>
