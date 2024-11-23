@@ -4,6 +4,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { ScheduleProvider } from "@/context/ScheduleContext";
 import { PetProvider } from "@/context/PetContext";
+import { HealthTrackingProvider } from "@/context/HealthTrackingContext";
 
 // Configure Poppins with bold and medium weights, including italics
 const poppins = Poppins({
@@ -23,7 +24,9 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
         <Navbar />
         <PetProvider>
-          <ScheduleProvider>{children}</ScheduleProvider>
+          <ScheduleProvider>
+            <HealthTrackingProvider>{children}</HealthTrackingProvider>
+          </ScheduleProvider>
         </PetProvider>
         <Footer key={Math.random()} />
       </body>
