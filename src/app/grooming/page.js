@@ -3,8 +3,8 @@
 import { useSchedule } from "@/context/ScheduleContext";
 import React from "react";
 import ScheduleCard from "@/components/grooming/ScheduleCard";
-import AddButton from "@/components/grooming/AddButton";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Grooming() {
   const scheduleContext = useSchedule();
@@ -75,9 +75,10 @@ export default function Grooming() {
 
         {/* Schedule Card */}
         <div className="p-[60px] bg-white rounded-lg">
-          {scheduleContext?.schedule && scheduleContext?.schedule.length > 0 ? (
+          {scheduleContext?.schedules &&
+          scheduleContext?.schedules.length > 0 ? (
             // Jika ada jadwal, tampilkan ScheduleCard
-            <ScheduleCard schedule={scheduleContext?.schedule} />
+            <ScheduleCard schedules={scheduleContext?.schedules} />
           ) : (
             // Jika tidak ada jadwal, tampilkan pesan
             <div className="flex flex-col gap-y-2 items-center justify-center text-center text-[#FFBCC3]">
@@ -98,7 +99,11 @@ export default function Grooming() {
         </div>
 
         {/* Add Button */}
-        <AddButton />
+        <Link
+          href="/grooming/schedule/new"
+          className="fixed bottom-8 right-8 bg-[#FFBCC3] text-white w-16 h-16 rounded-[30] shadow-md flex items-center justify-center text-[30px] font-bold hover:bg-[#F3AAB5] transition">
+          +
+        </Link>
       </section>
     </div>
   );
