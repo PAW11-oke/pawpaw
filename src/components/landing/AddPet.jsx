@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const AddPet = () => {
@@ -67,9 +68,11 @@ const AddPet = () => {
             Isi detail lengkap Anjing kesayangan Anda untuk menambahkannya ke
             dalam daftar.
           </p>
-          <button className="bg-[#FFBCC3] text-white w-[51px] h-[51px] rounded-[12px] mt-2 flex items-center justify-center text-3xl hover:scale-105">
+          <Link
+            href="/pet"
+            className="bg-[#FFBCC3] text-white w-[51px] h-[51px] rounded-[12px] mt-2 flex items-center justify-center text-3xl hover:scale-105">
             +
-          </button>
+          </Link>
         </div>
 
         {/* Card 2: Kelinci */}
@@ -88,9 +91,11 @@ const AddPet = () => {
             Isi detail lengkap Kelinci kesayangan Anda untuk menambahkannya ke
             dalam daftar.
           </p>
-          <button className="bg-[#FFBCC3] text-white w-[51px] h-[51px] rounded-[12px] mt-2 flex items-center justify-center text-3xl hover:scale-105">
+          <Link
+            href="/pet"
+            className="bg-[#FFBCC3] text-white w-[51px] h-[51px] rounded-[12px] mt-2 flex items-center justify-center text-3xl hover:scale-105">
             +
-          </button>
+          </Link>
         </div>
 
         {/* Card 3: Kucing */}
@@ -116,9 +121,11 @@ const AddPet = () => {
             Isi detail lengkap Kucing kesayangan Anda untuk menambahkannya ke
             dalam daftar.
           </p>
-          <button className="bg-[#FFBCC3] text-white w-[51px] h-[51px] rounded-[12px] mt-2 flex items-center justify-center text-3xl hover:scale-105">
+          <Link
+            href="/pet"
+            className="bg-[#FFBCC3] text-white w-[51px] h-[51px] rounded-[12px] mt-2 flex items-center justify-center text-3xl hover:scale-105">
             +
-          </button>
+          </Link>
         </div>
       </div>
     </div>

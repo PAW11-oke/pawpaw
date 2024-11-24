@@ -1,16 +1,16 @@
 "use client";
 
 import React from "react";
-import AddButton from "@/components/health-tracking/AddButton";
 import HealthTrackingCard from "@/components/health-tracking/HealthTrackingCard";
 import { useHealthTracking } from "@/context/HealthTrackingContext";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HealthTracking() {
   const HealthTrackingContext = useHealthTracking();
 
   return (
-    <div className="min-h-screen bg-white relative pt-[80px]">
+    <div className="min-h-screen bg-white relative pt-[80px] overflow-x-clip">
       {/* Header Section */}
       <header
         className="relative w-full min-h-[500px] bg-cover bg-center"
@@ -75,11 +75,11 @@ export default function HealthTracking() {
 
         {/* Health Tracking Card */}
         <div className="p-[60px] bg-white rounded-lg">
-          {HealthTrackingContext?.HealthTracking &&
-          HealthTrackingContext?.HealthTracking.length > 0 ? (
+          {HealthTrackingContext?.healthTrackings &&
+          HealthTrackingContext?.healthTrackings.length > 0 ? (
             // Jika ada data kesehatan, maka ditampilkan
             <HealthTrackingCard
-              HealthTracking={HealthTrackingContext?.HealthTracking}
+              healthTrackings={HealthTrackingContext?.healthTrackings}
             />
           ) : (
             // Jika tidak ada, tampilkan pesan
@@ -101,7 +101,11 @@ export default function HealthTracking() {
         </div>
 
         {/* Add Button */}
-        <AddButton />
+        <Link
+          href="/health-tracking/add-edit-health-tracking/new"
+          className="fixed bottom-8 right-8 bg-[#FFBCC3] text-white w-16 h-16 rounded-[30] shadow-md flex items-center justify-center text-[30px] font-bold hover:bg-[#F3AAB5] transition">
+          +
+        </Link>
       </section>
     </div>
   );
