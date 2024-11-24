@@ -63,7 +63,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link
-            href="/#AddPet"
+            href="/pet"
             className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
             My Pet
           </Link>

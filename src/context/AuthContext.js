@@ -17,7 +17,7 @@ const auth_data_null = undefined;
 const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(auth_data_null);
+  const [user, setUser] = useState(auth_data_present);
 
   // TO-DO: onSignup
   // TO-DO: onLogin

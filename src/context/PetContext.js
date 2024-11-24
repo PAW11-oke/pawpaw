@@ -5,6 +5,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const mock_pet_data = [
   {
     pet_id: "pet1",
+    user_id: "user1",
     tipe: "Kucing",
     nama: "Milo",
     tanggal_lahir: new Date("2021-03-15"),
@@ -52,6 +53,7 @@ const mock_pet_data = [
   },
   {
     pet_id: "pet2",
+    user_id: "user1",
     tipe: "Anjing",
     nama: "Rocky",
     tanggal_lahir: new Date("2020-08-22"),
@@ -75,6 +77,7 @@ const mock_pet_data = [
   },
   {
     pet_id: "pet3",
+    user_id: "user1",
     tipe: "Kelinci",
     nama: "Snowball",
     tanggal_lahir: new Date("2022-11-30"),
