@@ -9,8 +9,7 @@ export default function HealthTrackingCard({ HealthTracking }) {
       {HealthTracking.map((tracking, index) => (
         <div
           key={index}
-          className="relative flex flex-wrap items-center bg-[#FFF2F3] rounded-[25px] shadow-md"
-        >
+          className="relative flex flex-wrap items-center bg-[#FFF2F3] rounded-[25px] shadow-md">
           {/* Garis di kiri card */}
           <div className="absolute top-0 left-0 w-[10px] bg-[#FFBCC3] rounded-l-lg h-full"></div>
 
@@ -30,11 +29,15 @@ export default function HealthTrackingCard({ HealthTracking }) {
                 style={{ objectFit: "cover" }}
                 draggable={false}
               />
-              <img
-                src="/icons/SmallPawSolid.png"
-                alt="Paw Decoration"
-                className="absolute bottom-[-10px] right-[-10px] w-[50px]"
-              />
+              <div className="absolute bottom-[-10px] right-[-10px] w-[50px] aspect-[56.18/55.06]">
+                <Image
+                  src="/icons/SmallPawSolid.png"
+                  alt="Paw Decoration"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  draggable="false"
+                />
+              </div>
             </div>
           </div>
 
@@ -75,8 +78,7 @@ export default function HealthTrackingCard({ HealthTracking }) {
           {/* Tombol Edit */}
           <button
             onClick={() => console.log("Edit Data", tracking)}
-            className="absolute bottom-6 right-6 bg-[#FFBCC3] text-white text-[16px] font-bold py-2 px-6 rounded-[50px] shadow-lg hover:bg-[#F3AAB5] transition-all"
-          >
+            className="absolute bottom-6 right-6 bg-[#FFBCC3] text-white text-[16px] font-bold py-2 px-6 rounded-[50px] shadow-lg hover:bg-[#F3AAB5] transition-all">
             Edit Data
           </button>
         </div>

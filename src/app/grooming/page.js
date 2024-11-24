@@ -1,9 +1,10 @@
 "use client";
 
+import { useSchedule } from "@/context/ScheduleContext";
 import React from "react";
 import ScheduleCard from "@/components/grooming/ScheduleCard";
 import AddButton from "@/components/grooming/AddButton";
-import { useSchedule } from "@/context/ScheduleContext";
+import Image from "next/image";
 
 export default function Grooming() {
   const scheduleContext = useSchedule();
@@ -13,11 +14,12 @@ export default function Grooming() {
       {/* Header Section */}
       <header
         className="relative w-full min-h-[500px] bg-cover bg-center"
-        style={{ backgroundImage: `url('/bgGrooming.png')` }}
-      >
+        style={{ backgroundImage: `url('/bgGrooming.png')` }}>
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
-          <h1 className="text-[60px] font-bold mt-[180px]">Grooming Schedule</h1>
+          <h1 className="text-[60px] font-bold mt-[180px]">
+            Grooming Schedule
+          </h1>
           <p className="text-[20px]">
             Pengatur jadwal grooming hewan peliharaan kesayangan Pawrents
           </p>
@@ -28,42 +30,68 @@ export default function Grooming() {
       <section className="p-6 sm:p-12 min-h-[500px] relative mt-2">
         <h2 className="flex items-center gap-2 text-3xl font-bold text-[#FFBCC3] ml-16">
           {/* Ikon Clock */}
-          <img
-            src="/icons/clock.png"
-            alt="Clock Icon"
-            className="w-7 h-7 mr-2"
-          />
+          <div className="relative w-7 aspect-square">
+            <Image
+              src="/icons/clock.png"
+              alt="Clock Icon"
+              fill
+              style={{ objectFit: "contain" }}
+              draggable="false"
+            />
+          </div>
           Your Schedule
         </h2>
 
         {/* Dekorasi Kanan 1 */}
-        <div className="absolute top-[300px] right-0 w-[60px] z-0">
-          <img src="/icons/SmallPaw1.png" alt="Small Paw Right 1" />
+        <div className="absolute top-[420px] -right-10 w-36 z-0 aspect-[53.71/52.64]">
+          <Image
+            src="/icons/SmallPaw1.png"
+            alt="Small Paw Right 1"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
         </div>
         {/* Dekorasi Kanan 2 */}
-        <div className="absolute top-[380px] right-[20px] w-[40px] z-0">
-          <img src="/icons/SmallPaw2.png" alt="Small Paw Right 2" />
+        <div className="absolute top-[580px] right-[20px] w-16 z-0 aspect-[53.71/52.64]">
+          <Image
+            src="/icons/SmallPaw2.png"
+            alt="Small Paw Right 2"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
         </div>
         {/* Dekorasi Kiri */}
-        <div className="absolute top-[20px] left-0 w-[120px] z-0">
-          <img src="/icons/BlurPaw.png" alt="Blur Paw" />
+        <div className="absolute top-[100px] -left-12 w-48 z-0 aspect-[53.71/52.64]">
+          <Image
+            src="/icons/BlurPaw.png"
+            alt="Blur Paw"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
         </div>
 
         {/* Schedule Card */}
-        <div className="p-[60px] bg-white rounded-lg p-8">
+        <div className="p-[60px] bg-white rounded-lg">
           {scheduleContext?.schedule && scheduleContext?.schedule.length > 0 ? (
             // Jika ada jadwal, tampilkan ScheduleCard
             <ScheduleCard schedule={scheduleContext?.schedule} />
           ) : (
             // Jika tidak ada jadwal, tampilkan pesan
-            <div className="flex flex-col items-center justify-center text-center text-[#FFBCC3]">
-              <img
-                src="/icons/NoSchedule.png"
-                alt="No Schedule"
-                className="w-24 h-24 mb-4"
-              />
-              <p className="text-[28px] text-black/50">
-                Belum ada jadwal Grooming.
+            <div className="flex flex-col gap-y-2 items-center justify-center text-center text-[#FFBCC3]">
+              <div className="relative w-24 aspect-square">
+                <Image
+                  src="/icons/NoSchedule.png"
+                  alt="No Schedule"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  draggable="false"
+                />
+              </div>
+              <p className="text-[25px] text-black/50">
+                Belum ada <br /> jadwal Grooming.
               </p>
             </div>
           )}

@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -10,17 +11,26 @@ const Footer = () => {
       <div className="text-[16px] text-white mt-4 md:mt-0">
         &copy; 2024 PawPaw. All rights reserved.
       </div>
-      <div className="flex items-center">
-        <img src="/icons/FooterLogo.png" alt="Paw Icon" className="h-[140px]" />{" "}
+      <Link
+        href="/"
+        className="relative flex items-center w-72 aspect-[182.45/100]">
+        {/* <img src="/icons/FooterLogo.png" alt="Paw Icon" className="h-[140px]" />{" "} */}
+        <Image
+          src="/icons/FooterLogo.png"
+          alt="Paw Ico"
+          fill
+          style={{ objectFit: "contain" }}
+          draggable="false"
+        />
         {/* Sesuaikan path icon */}
-      </div>
+      </Link>
       <div className="flex space-x-4 text-[16px] text-white mt-4 md:mt-0 gap-[50px]">
-        <a href="/terms" className="hover:underline">
+        <Link href="/" className="hover:underline cursor-default">
           Terms of Service
-        </a>
-        <a href="/privacy" className="hover:underline">
+        </Link>
+        <Link href="/" className="hover:underline cursor-default">
           Privacy Policy
-        </a>
+        </Link>
       </div>
     </footer>
   );
