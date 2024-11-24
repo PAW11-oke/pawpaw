@@ -1,19 +1,16 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 
 export default function Navbar() {
+  const authContext = useAuth();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hidden, setHidden] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Save logged in user, modify BE if its needed
-  const [user, setUser] = useState(null);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
 
   // Fungsi untuk menangani scroll
   const handleScroll = useCallback(() => {
@@ -28,16 +25,20 @@ export default function Navbar() {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    const userData = JSON.parse(localStorage.getItem("user")); // Simpan data user di localStorage setelah login
-    if (userData) {
-      setIsLoggedIn(true); // Jika user data ada, set status login ke true
-      setUser(userData); // Simpan data user di state
-    }
+    // const userData = JSON.parse(localStorage.getItem("user")); // Simpan data user di localStorage setelah login
+    // if (userData) {
+    //   setIsLoggedIn(true); // Jika user data ada, set status login ke true
+    //   setUser(userData); // Simpan data user di state
+    // }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]); // Masukkan handleScroll sebagai dependensi
+  }, [handleScroll]);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   return (
     <nav
@@ -85,17 +86,12 @@ export default function Navbar() {
 
         {/* Kondisi tombol atau profil */}
         <div className="hidden md:flex items-center space-x-4 text-[16px]">
-          {isLoggedIn ? (
+          {authContext?.user ? (
             <div className="flex items-center space-x-2">
               {/* Foto Profil */}
-              {/* <img
-                src={user?.profilePhoto || "/icons/DefaultProfPic.png"}
-                alt="User Profile"
-                className="w-8 h-8 rounded-full border border-[#FFBCC3]"
-              /> */}
-              <div className="relative size-8 rounded-full overflow-clip aspect-square">
+              <div className="relative size-10 rounded-full overflow-clip aspect-square">
                 <Image
-                  src={user?.profilePhoto || "/icons/DefaultProfPic.png"}
+                  src={authContext?.user.foto || "/icons/DefaultProfPic.png"}
                   alt="User Profile"
                   fill
                   style={{ objectFit: "contain" }}
@@ -104,7 +100,7 @@ export default function Navbar() {
               </div>
               {/* Username User */}
               <span className="bg-[#FFBCC3] text-white px-4 py-2 rounded-[56.76px]">
-                {user?.username || "User"}
+                {authContext?.user.username || "User"}
               </span>
             </div>
           ) : (

@@ -5,7 +5,7 @@ import { useSchedule } from "@/context/ScheduleContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function AddScheduleForm() {
+export default function AddScheduleForm({ scheduleId }) {
   const scheduleContext = useSchedule();
   const router = useRouter();
 
