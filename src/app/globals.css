@@ -36,3 +36,20 @@ html {
 .scroll-container {
   scroll-behavior: smooth;
 }
+
+/* For Webkit browsers like Chrome, Safari */
+::-webkit-scrollbar {
+  width: 0.8vw; /* Width of the scrollbar */
+  height: 0.8vw; /* Height of the scrollbar (for horizontal scrollbars) */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0); /* Background of the scrollbar track */
+  opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: black; /* Color of the scrollbar slider */
+  border-radius: 0.4vw; /* Rounded corners for the slider */
+  border: 0.1vw solid white; /* Adds space around the slider */
+}
