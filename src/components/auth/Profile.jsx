@@ -33,6 +33,7 @@ const Profile = () => {
         <h1 className="font-bold text-3xl text-black">Your Pawrent Profile</h1>
 
         {/* Profile photo container */}
+        <p>Tambahkan Foto</p>
         <div className="relative">
           <label htmlFor="profilePhotoInput" className="cursor-pointer">
             <div className="relative w-28 aspect-square rounded-full object-cover border-2 border-gray-300">

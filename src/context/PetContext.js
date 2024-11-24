@@ -10,7 +10,7 @@ const mock_pet_data = [
     tanggal_lahir: new Date("2021-03-15"),
     umur: 3,
     breed: "Persian",
-    foto: "/DefaultProfilePicture.png",
+    foto: "/icons/SmallPawSolid.png",
     aktivitas: [
       {
         aktivitas_id: "aktivitas1",
@@ -30,24 +30,24 @@ const mock_pet_data = [
         caption: "Tidur siang di jendela",
         tanggal: new Date("2024-05-01"),
       },
-      {
-        aktivitas_id: "aktivitas4",
-        foto: "/DefaultProfilePicture.png",
-        caption: "Tidur siang di jendela",
-        tanggal: new Date("2024-07-01"),
-      },
-      {
-        aktivitas_id: "aktivitas5",
-        foto: "/DefaultProfilePicture.png",
-        caption: "Tidur siang di jendela",
-        tanggal: new Date("2024-07-02"),
-      },
-      {
-        aktivitas_id: "aktivitas6",
-        foto: "/DefaultProfilePicture.png",
-        caption: "Tidur siang di jendela",
-        tanggal: new Date("2024-09-01"),
-      },
+      // {
+      //   aktivitas_id: "aktivitas4",
+      //   foto: "/DefaultProfilePicture.png",
+      //   caption: "Tidur siang di jendela",
+      //   tanggal: new Date("2024-07-01"),
+      // },
+      // {
+      //   aktivitas_id: "aktivitas5",
+      //   foto: "/DefaultProfilePicture.png",
+      //   caption: "Tidur siang di jendela",
+      //   tanggal: new Date("2024-07-02"),
+      // },
+      // {
+      //   aktivitas_id: "aktivitas6",
+      //   foto: "/DefaultProfilePicture.png",
+      //   caption: "Tidur siang di jendela",
+      //   tanggal: new Date("2024-09-01"),
+      // },
     ],
   },
   {
@@ -57,7 +57,7 @@ const mock_pet_data = [
     tanggal_lahir: new Date("2020-08-22"),
     umur: 3,
     breed: "Golden Retriever",
-    foto: "/DefaultProfilePicture.png",
+    foto: "/icons/SmallPawSolid.png",
     aktivitas: [
       {
         aktivitas_id: "aktivitas7",
@@ -80,7 +80,7 @@ const mock_pet_data = [
     tanggal_lahir: new Date("2022-11-30"),
     umur: 1,
     breed: "Holland Lop",
-    foto: "/DefaultProfilePicture.png",
+    foto: "/icons/SmallPawSolid.png",
     aktivitas: [
       {
         aktivitas_id: "aktivitas9",
@@ -103,8 +103,88 @@ const PetContext = createContext(undefined);
 export const PetProvider = ({ children }) => {
   const [pets, setPets] = useState(mock_pet_data);
 
+  // Create a new Pet
+  const addPet = (newPet) => {
+    setPets((prev) => [...prev, newPet]);
+  };
+
+  // TO-DO: Read Pets
+
+  // Update an existing pet
+  const updatePet = (updatedPet) => {
+    setPets((prev) =>
+      prev.map((pet) =>
+        pet.pet_id === updatedPet.pet_id ? { ...updatedPet } : pet
+      )
+    );
+  };
+
+  // Delete a pet by its ID
+  const removePet = (petId) => {
+    setPets((prev) => prev.filter((pet) => pet.pet_id !== petId));
+  };
+
+  // Create a new activity to a pet
+  const addActivity = (petId, newActivity) => {
+    setPets((prev) =>
+      prev.map((pet) =>
+        pet.pet_id === petId
+          ? { ...pet, aktivitas: [...pet.aktivitas, newActivity] }
+          : pet
+      )
+    );
+  };
+
+  // TO-DO: Read Activities
+
+  // Update an existing activity
+  const updateActivity = (petId, updatedActivity) => {
+    setPets((prev) =>
+      prev.map((pet) =>
+        pet.pet_id === petId
+          ? {
+              ...pet,
+              aktivitas: pet.aktivitas.map((activity) =>
+                activity.aktivitas_id === updatedActivity.aktivitas_id
+                  ? { ...updatedActivity }
+                  : activity
+              ),
+            }
+          : pet
+      )
+    );
+  };
+
+  // Delete an activity from a pet
+  const removeActivity = (petId, activityId) => {
+    setPets((prev) =>
+      prev.map((pet) =>
+        pet.pet_id === petId
+          ? {
+              ...pet,
+              aktivitas: pet.aktivitas.filter(
+                (activity) => activity.aktivitas_id !== activityId
+              ),
+            }
+          : pet
+      )
+    );
+  };
+
   return (
-    <PetContext.Provider value={{ pets, setPets }}>
+    <PetContext.Provider
+      value={{
+        pets,
+        setPets,
+
+        addPet,
+        updatePet,
+        removePet,
+
+        addActivity,
+        updateActivity,
+        removeActivity,
+      }}>
       {children}
     </PetContext.Provider>
   );

@@ -2,10 +2,12 @@
 
 import { usePet } from "@/context/PetContext";
 import { useState, useRef, useEffect } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
-import AddEditPet from "./AddEditPet";
-import PetCard from "./PetCard";
+
+import AddEditPet from "@/components/pet/AddEditPet";
+import PetCard from "@/components/pet/PetCard";
 
 const AllPet = () => {
   const petContext = usePet();
@@ -66,7 +68,7 @@ const AllPet = () => {
           <h2 className="font-bold text-4xl text-pink-main">Your Pet</h2>
         </div>
 
-        {/* List of Pets Card */}
+        {/* List of Pet Cards */}
         {petContext?.pets && petContext?.pets.length > 0 ? (
           <div className="w-full flex flex-col gap-y-12 pb-24">
             {petContext?.pets.map((value, index) => (
@@ -98,13 +100,19 @@ const AllPet = () => {
           <div
             className="my-4 w-40 bg-white border border-gray-300 rounded-lg shadow-lg flex flex-col"
             ref={menuRef}>
-            <Link href="/pet" className="py-2 px-4 text-left hover:bg-pink-100">
+            <Link
+              href="/pet/add-edit-pet/anjing/new"
+              className="py-2 px-4 text-left hover:bg-pink-100">
               🐶 Anjing
             </Link>
-            <Link href="/pet" className="py-2 px-4 text-left hover:bg-pink-100">
+            <Link
+              href="/pet/add-edit-pet/kelinci/new"
+              className="py-2 px-4 text-left hover:bg-pink-100">
               🐇 Kelinci
             </Link>
-            <Link href="/pet" className="py-2 px-4 text-left hover:bg-pink-100">
+            <Link
+              href="/pet/add-edit-pet/kucing/new"
+              className="py-2 px-4 text-left hover:bg-pink-100">
               🐱 Kucing
             </Link>
           </div>

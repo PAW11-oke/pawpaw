@@ -1,6 +1,7 @@
+import { useRef, useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
 
 const PetCard = ({ pet }) => {
   const scrollContainerRef = useRef(null);
@@ -66,7 +67,7 @@ const PetCard = ({ pet }) => {
             </div>
           </div>
           <Link
-            href="/pet"
+            href={`/pet/add-edit-pet/${pet.tipe}/${pet.pet_id}`}
             className="flex justify-center mt-4 w-96 px-6 py-2 rounded-lg bg-pink-secondary text-white font-semibold">
             Edit Data
           </Link>
@@ -85,12 +86,13 @@ const PetCard = ({ pet }) => {
           onMouseUp={handleMouseLeaveOrUp}
           onMouseLeave={handleMouseLeaveOrUp}
           onMouseMove={handleMouseMove}
-          style={{ cursor: isDragging ? "grabbing" : "grab" }}>
+          //   style={{ cursor: isDragging ? "grabbing" : "grab" }}
+        >
           {[...pet.aktivitas]
             .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)) // Sort from latest to oldest
             .map((activity) => (
               <Link
-                href="/pet"
+                href={`/pet/activity/${pet.pet_id}/${activity.aktivitas_id}`}
                 key={activity.aktivitas_id}
                 className="min-w-56 p-4 bg-white rounded-xl inline-flex flex-col justify-between gap-y-2">
                 <div className="relative size-42 aspect-square">
@@ -115,9 +117,11 @@ const PetCard = ({ pet }) => {
 
       {/* Add Activity Button */}
       <div className="mt-8 flex justify-start">
-        <button className="px-12 py-2 rounded-lg bg-pink-secondary text-white font-semibold">
+        <Link
+          href={`/pet/activity/${pet.pet_id}/new`}
+          className="px-12 py-2 rounded-lg bg-pink-secondary text-white font-semibold">
           Add Activity +
-        </button>
+        </Link>
       </div>
     </div>
   );

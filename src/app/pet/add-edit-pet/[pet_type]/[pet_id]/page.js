@@ -1,10 +1,12 @@
 import AddEditPet from "@/components/pet/AddEditPet";
 import React from "react";
 
-const AddEditPetPage = () => {
+const AddEditPetPage = async ({ params }) => {
+  const { pet_type, pet_id } = await params;
+
   return (
     <>
-      <AddEditPet />
+      <AddEditPet petType={pet_type} petId={pet_id} />
     </>
   );
 };
