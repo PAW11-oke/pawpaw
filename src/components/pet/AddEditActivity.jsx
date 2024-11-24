@@ -35,7 +35,7 @@ const AddEditActivity = ({ petId, activityId }) => {
 
   const isValid = () => {
     // Check if all required fields are filled
-    const { foto, caption } = petData;
+    const { foto, caption } = activityData;
     return foto && caption;
   };
 
