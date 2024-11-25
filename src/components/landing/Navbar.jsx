@@ -87,7 +87,9 @@ export default function Navbar() {
         {/* Kondisi tombol atau profil */}
         <div className="hidden md:flex items-center space-x-4 text-[16px]">
           {authContext?.user ? (
-            <div className="flex items-center space-x-2">
+            <Link
+              href={`/profile/${authContext?.user.user_id}`}
+              className="flex items-center space-x-2">
               {/* Foto Profil */}
               <div className="relative size-10 rounded-full overflow-clip aspect-square">
                 <Image
@@ -102,7 +104,7 @@ export default function Navbar() {
               <span className="bg-[#FFBCC3] text-white px-4 py-2 rounded-[56.76px]">
                 {authContext?.user.username || "User"}
               </span>
-            </div>
+            </Link>
           ) : (
             <>
               <a

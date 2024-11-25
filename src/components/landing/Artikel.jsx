@@ -37,6 +37,7 @@ const Artikel = () => {
           <Link
             href={url}
             className="w-96 h-[450px] flex flex-col gap-y-2 items-start relative rounded-2xl p-4 shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)]"
+            target="_blank"
             key={index}>
             <div className="relative w-full aspect-[364/243] overflow-clip rounded-xl">
               <Image
