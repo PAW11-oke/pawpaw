@@ -8,7 +8,7 @@ const auth_data_present = {
   email: "email@gmail.com",
   password: "secret",
   foto: "/DefaultProfilePicture.png",
-  username: "mock_username",
+  username: "pawrent",
 };
 
 // Mocking no user logs in
