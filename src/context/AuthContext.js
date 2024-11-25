@@ -19,6 +19,11 @@ const AuthContext = createContext(undefined);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(auth_data_present);
 
+  // for profile page edit functionality
+  const updateUser = (updatedData) => {
+    setUser((prevUser) => ({ ...prevUser, ...updatedData }));
+  };
+
   // TO-DO: onSignup
   // TO-DO: onLogin
   // TO-DO: onLogout
@@ -29,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        setUser,
+        setUser: updateUser,
 
         // onSignup,
         // onLogin,

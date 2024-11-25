@@ -5,12 +5,16 @@ import { MdOutlineSave } from "react-icons/md";
 import { LuPencilLine } from "react-icons/lu";
 import { useState } from "react";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
+  const authContext = useAuth();
+  const route = useRouter();
   const [profilePhoto, setProfilePhoto] = useState(
-    "/DefaultProfilePicture.png"
+    authContext?.user.foto || "/DefaultProfilePicture.png"
   );
-  const [name, setName] = useState("");
+  const [name, setName] = useState(authContext?.user.username || "");
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -25,6 +29,17 @@ const Profile = () => {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+  };
+
+  const handleSave = () => {
+    if (authContext?.setUser) {
+      authContext.setUser({
+        foto: profilePhoto,
+        username: name,
+      });
+    }
+    alert("Your profile has been successfully saved");
+    route.push("/");
   };
 
   return (
@@ -77,12 +92,12 @@ const Profile = () => {
         </div>
 
         {/* Save button */}
-        <Link
-          href="/"
+        <button
+          onClick={handleSave}
           className="w-full flex justify-center items-center gap-x-2 text-white font-bold bg-pink-main rounded-full py-2">
           Save
           <MdOutlineSave className="text-lg text-white" />
-        </Link>
+        </button>
       </div>
     </div>
   );
