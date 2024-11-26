@@ -1,18 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { useHealthTracking} from "@/context/HealthTrackingContext";
+import { useHealthTracking } from "@/helper/context/HealthTrackingContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function AddHealthTrackingForm() {
   const healthTrackingContext = useHealthTracking();
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({
     petName: "",
     medicalRecord: "",
     allergy: "",
-    vaccination:"",
+    vaccination: "",
   });
 
   const handleChange = (e) => {
@@ -25,31 +26,48 @@ export default function AddHealthTrackingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const newHealthTracking = {
       ...formData,
       id: Date.now().toString(),
     };
-    
+
     healthTrackingContext?.addHealthTracking(newHealthTracking);
     router.push("/health-tracking");
   };
 
   return (
     <div className="min-h-screen bg-white relative pt-[80px]">
-      
-        {/* Dekorasi Kanan 1 */}
-        <div className="absolute top-[500px] right-0 w-[60px] z-0">
-            <img src="/icons/SmallPaw1.png" alt="Small Paw Right 1" />
-        </div>
-        {/* Dekorasi Kanan 2 */}
-        <div className="absolute top-[580px] right-[20px] w-[40px] z-0">
-            <img src="/icons/SmallPaw2.png" alt="Small Paw Right 2" />
-        </div>
-        {/* Dekorasi Kiri */}
-        <div className="absolute top-[100px] left-0 w-[120px] z-0">
-            <img src="/icons/BlurPaw.png" alt="Blur Paw" />
-        </div>
+      {/* Dekorasi Kanan 1 */}
+      <div className="absolute top-[420px] -right-10 w-36 z-0 aspect-[53.71/52.64]">
+        <Image
+          src="/icons/SmallPaw1.png"
+          alt="Small Paw Right 1"
+          fill
+          style={{ objectFit: "contain" }}
+          draggable="false"
+        />
+      </div>
+      {/* Dekorasi Kanan 2 */}
+      <div className="absolute top-[580px] right-[20px] w-16 z-0 aspect-[53.71/52.64]">
+        <Image
+          src="/icons/SmallPaw2.png"
+          alt="Small Paw Right 2"
+          fill
+          style={{ objectFit: "contain" }}
+          draggable="false"
+        />
+      </div>
+      {/* Dekorasi Kiri */}
+      <div className="absolute top-[100px] -left-12 w-48 z-0 aspect-[53.71/52.64]">
+        <Image
+          src="/icons/BlurPaw.png"
+          alt="Blur Paw"
+          fill
+          style={{ objectFit: "contain" }}
+          draggable="false"
+        />
+      </div>
 
       <main className="container mx-auto px-6 flex-grow flex flex-col items-center py-12">
         <div className="bg-white w-full max-w-2xl p-8 rounded-[30px] shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)]">
@@ -119,8 +137,7 @@ export default function AddHealthTrackingForm() {
 
             <button
               type="submit"
-              className="w-full bg-[#FFBCC3] text-white py-3 rounded-[120px] font-bold text-[16px] hover:bg-[#F3AAB5] transition-colors mt-6"
-            >
+              className="w-full bg-[#FFBCC3] text-white py-3 rounded-[120px] font-bold text-[16px] hover:bg-[#F3AAB5] transition-colors mt-6">
               Simpan
             </button>
           </form>

@@ -2,18 +2,87 @@
 
 import Image from "next/image";
 import { useState } from "react";
-
 import AuthOuterBox from "./AuthOuterBox";
 import { MdOutlineEmail } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { MdLogin } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
+import { useToast } from "@/helper/context/ToastContext";
+import { useAuth } from "@/helper/context/AuthContext";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/compat/router";
 
 const Login = () => {
-  const [loginData, setLoginData] = useState();
+  const { setUser, login } = useAuth();
+  const [statusMessage, setStatusMessage] = useState("");
+
+  const [formData, setFormData] = useState({
+      email: "",
+      password: "",
+  });
+
+  const [loading, setLoading] = useState(false);
   const [isPasswordRemembered, setIsPasswordRemembered] = useState(false);
-  const handleInputChange = () => {};
+  const router = useRouter();
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+          ...prev,
+          [name]: value, // Update state sesuai input
+      }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email, password: formData.password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Login response:", data);
+        const { token, user } = data;
+
+        if (data.token) {
+          // Simpan token ke localStorage atau sessionStorage
+          window.localStorage.setItem("jwtToken", data.token);
+          console.log("Token:", localStorage.getItem("jwtToken"));
+          setStatusMessage("Profile updated successfully!");
+        } else {
+          setStatusMessage("Token not provided by the server.");
+        }
+
+        if (user) {
+          console.log("User logged in:", user);
+          login(setUser); // Simpan data user ke context
+          setUser(user.profilePicture); // Simpan data login ke context
+          localStorage.getItem("user", JSON.stringify(user)); // Simpan data user di localStorage setelah login
+          window.location.href = "/"; // Redirect ke halaman utama
+        } else {
+          alert("User data not found in response!");
+        }
+
+      } else {
+        const error = await response.json();
+        alert(error.message || "Login gagal!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Terjadi kesalahan saat login!");
+    }
+  };
+  
+  
+
+  const handleGoogleLogin = async () => {
+    await signIn('google', { callbackUrl: '/chat' });
+  };
 
   return (
     <div className="relative w-screen max-w-full h-[110vh] py-40 overflow-x-clip grid place-content-center mt-10">
@@ -27,8 +96,8 @@ const Login = () => {
             <input
               id="email"
               name="email"
-              onChange={handleInputChange}
-              value={loginData}
+              onChange={handleChange}
+              value={formData.email}
               placeholder="youremail@gmail.com"
               spellCheck="false"
               className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
@@ -46,8 +115,8 @@ const Login = () => {
             <input
               id="password"
               name="password"
-              onChange={handleInputChange}
-              value={loginData}
+              onChange={handleChange}
+              value={formData.password}
               placeholder="********"
               spellCheck="false"
               className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
@@ -80,13 +149,14 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Sin Button */}
-        <Link
-          href="/"
+        {/* Sign In Button */}
+        <button
+          onClick={handleLogin}
+          disabled={loading}
           className="w-full flex justify-center items-center gap-x-2 text-white font-bold bg-pink-main rounded-full py-2">
           Sign In
           <MdLogin className="text-lg text-white" />
-        </Link>
+        </button>
 
         {/* Don't Have an Account */}
         <div className="w-full flex justify-center items-center gap-x-2 text-sm text-black font-bold">
@@ -104,12 +174,13 @@ const Login = () => {
         </div>
 
         {/* Sign In with Google */}
-        <Link
-          href="/"
+        <button
+          onClick={handleGoogleLogin}
+          disabled={loading}
           className="w-full flex justify-center items-center gap-x-2 text-black font-bold bg-white rounded-full py-2 border-2 border-[#CBD5E1]">
           <FcGoogle className="text-lg" />
           Sign In With Google
-        </Link>
+        </button>
       </AuthOuterBox>
 
       {/* Background Decor */}

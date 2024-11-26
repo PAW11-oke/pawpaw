@@ -1,10 +1,14 @@
+"use client"
+
 import Login from "@/components/auth/Login";
-import React from "react";
+import React, {useState} from "react";
+
 
 const LogIn = () => {
+  const [user, setUser] = useState(null);
   return (
     <>
-      <Login />
+      <Login setUser = {setUser}/>
     </>
   );
 };

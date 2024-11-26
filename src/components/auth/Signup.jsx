@@ -12,7 +12,38 @@ import Link from "next/link";
 
 const Signup = () => {
   const [signUpData, setSignUpData] = useState();
-  const handleInputChange = () => {};
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+});
+const [message, setMessage] = useState('');
+
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+};
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const response = await fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+        setMessage(data.message);
+        if (data.success) {
+            setTimeout(() => window.location.href = '/login', 3000); 
+        }
+    } catch (error) {
+        setMessage('Something went wrong');
+    }
+};
   return (
     <div className="relative w-screen max-w-full h-[110vh] py-40 overflow-x-clip grid place-content-center mt-10">
       <AuthOuterBox auth="sign up">
@@ -25,8 +56,8 @@ const Signup = () => {
             <input
               id="username"
               name="username"
-              onChange={handleInputChange}
-              value={signUpData}
+              onChange={handleChange}
+              value={formData.username}
               placeholder="username"
               spellCheck="false"
               className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
@@ -44,8 +75,8 @@ const Signup = () => {
             <input
               id="email"
               name="email"
-              onChange={handleInputChange}
-              value={signUpData}
+              onChange={handleChange}
+              value={formData.email}
               placeholder="youremail@gmail.com"
               spellCheck="false"
               className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
@@ -63,8 +94,8 @@ const Signup = () => {
             <input
               id="password"
               name="password"
-              onChange={handleInputChange}
-              value={signUpData}
+              onChange={handleChange}
+              value={formData.password}
               placeholder="********"
               spellCheck="false"
               className="py-2 pl-14 flex items-center border-[#CBD5E1] focus:border-pink-main border-2 rounded-full text-black text-base outline-none w-full"
@@ -74,12 +105,12 @@ const Signup = () => {
         </div>
 
         {/* Sign Up Button */}
-        <Link
-          href="/signup/user-info"
+        <button
+          onClick={handleSubmit}
           className="w-full flex justify-center items-center gap-x-2 text-white font-bold bg-pink-main rounded-full py-2">
           Sign Up
           <MdLogin className="text-lg text-white" />
-        </Link>
+        </button>
 
         {/* Don't Have an Account */}
         <div className="w-full flex justify-center items-center gap-x-2 text-sm text-black font-bold">

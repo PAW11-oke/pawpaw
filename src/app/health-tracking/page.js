@@ -3,7 +3,8 @@
 import React from "react";
 import AddButton from "@/components/health-tracking/AddButton";
 import HealthTrackingCard from "@/components/health-tracking/HealthTrackingCard";
-import { useHealthTracking } from "@/context/HealthTrackingContext";
+import { useHealthTracking } from "@/helper/context/HealthTrackingContext";
+import Image from "next/image";
 
 export default function HealthTracking() {
   const HealthTrackingContext = useHealthTracking();
@@ -13,8 +14,7 @@ export default function HealthTracking() {
       {/* Header Section */}
       <header
         className="relative w-full min-h-[500px] bg-cover bg-center"
-        style={{ backgroundImage: `url('/bgHealthTracking.png')` }}
-      >
+        style={{ backgroundImage: `url('/bgHealthTracking.png')` }}>
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
           <h1 className="text-[60px] font-bold mt-[180px]">Health Tracking</h1>
@@ -28,40 +28,71 @@ export default function HealthTracking() {
       <section className="p-6 sm:p-12 min-h-[500px] relative mt-2">
         <h2 className="flex items-center gap-2 text-3xl font-bold text-[#FFBCC3] ml-16">
           {/* Ikon Clock */}
-          <img
-            src="/icons/HealthData.png"
-            alt="Health Data Icon"
-            className="w-7 h-7 mr-2"
-          />
+          <div className="">
+            <div className="relative w-7 aspect-square">
+              <Image
+                src="/icons/HealthData.png"
+                alt="Health Data Icon"
+                fill
+                style={{ objectFit: "contain" }}
+                draggable="false"
+              />
+            </div>
+          </div>
           Data Kesehatan
         </h2>
 
         {/* Dekorasi Kanan 1 */}
-        <div className="absolute top-[300px] right-0 w-[60px] z-0">
-          <img src="/icons/SmallPaw1.png" alt="Small Paw Right 1" />
+        <div className="absolute top-[420px] -right-10 w-36 z-0 aspect-[53.71/52.64]">
+          <Image
+            src="/icons/SmallPaw1.png"
+            alt="Small Paw Right 1"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
         </div>
         {/* Dekorasi Kanan 2 */}
-        <div className="absolute top-[380px] right-[20px] w-[40px] z-0">
-          <img src="/icons/SmallPaw2.png" alt="Small Paw Right 2" />
+        <div className="absolute top-[580px] right-[20px] w-16 z-0 aspect-[53.71/52.64]">
+          <Image
+            src="/icons/SmallPaw2.png"
+            alt="Small Paw Right 2"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
         </div>
         {/* Dekorasi Kiri */}
-        <div className="absolute top-[20px] left-0 w-[120px] z-0">
-          <img src="/icons/BlurPaw.png" alt="Blur Paw" />
+        <div className="absolute top-[100px] -left-12 w-48 z-0 aspect-[53.71/52.64]">
+          <Image
+            src="/icons/BlurPaw.png"
+            alt="Blur Paw"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
         </div>
 
         {/* Health Tracking Card */}
-        <div className="p-[60px] bg-white rounded-lg p-8">
-          {HealthTrackingContext?.HealthTracking && HealthTrackingContext?.HealthTracking.length > 0 ? (
+        <div className="p-[60px] bg-white rounded-lg">
+          {HealthTrackingContext?.HealthTracking &&
+          HealthTrackingContext?.HealthTracking.length > 0 ? (
             // Jika ada data kesehatan, maka ditampilkan
-            <HealthTrackingCard HealthTracking={HealthTrackingContext?.HealthTracking} />
+            <HealthTrackingCard
+              HealthTracking={HealthTrackingContext?.HealthTracking}
+            />
           ) : (
             // Jika tidak ada, tampilkan pesan
             <div className="flex flex-col items-center justify-center text-center text-[#FFBCC3]">
-              <img
-                src="/icons/NoHealthTracking.png"
-                alt="No HealthTracking"
-                className="w-24 h-24 mb-4"
-              />
+              <div className="relative w-24 aspect-square">
+                <Image
+                  src="/icons/NoHealthTracking.png"
+                  alt="No HealthTracking"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  draggable="false"
+                />
+              </div>
               <p className="text-[28px] text-black/50">
                 Belum ada data kesehatan.
               </p>

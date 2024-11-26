@@ -1,7 +1,12 @@
+import AddProfilePhoto from "@/components/auth/AddProfilePhoto";
 import React from "react";
 
-const UserInfo = () => {
-  return <div></div>;
+const AddProfilePhotoPage = () => {
+  return (
+    <>
+      <AddProfilePhoto />
+    </>
+  );
 };
 
-export default UserInfo;
+export default AddProfilePhotoPage;

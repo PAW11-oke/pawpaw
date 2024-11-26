@@ -1,87 +1,211 @@
 "use client";
 
+import { useAuth } from "@/helper/context/AuthContext";
+import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 
 export default function Navbar() {
+  const { user, setUser } = useAuth();  
+
+  // const [user, setUser] = useState(null);
+
+  // const { showToast } = useToast();
+  // const { user, logout } = useAuth(); // Ambil user dan logout dari context
+  // const [loading, setLoading] = useState(true); // State untuk menangani pemuatan
+
+  const isLoggedIn = !!user; // Variabel untuk mengecek apakah user ada
+  
   const [menuOpen, setMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hidden, setHidden] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Save logged in user, modify BE if its needed
-  const [user, setUser] = useState(null);
-  
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        window.localStorage.removeItem("user");
+        setUser(null); // Reset user state
+        window.location.href = "/login"; // Redirect ke halaman utama
+      } else {
+        const error = await response.json();
+        console.error("Logout error:", error);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Fungsi untuk menangani scroll
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (window.scrollY > lastScrollY) {
-      // Scroll ke bawah
-      setHidden(true);
+      setHidden(true); // Scroll ke bawah
     } else {
-      // Scroll ke atas
-      setHidden(false);
+      setHidden(false); // Scroll ke atas
     }
     setLastScrollY(window.scrollY);
-  };
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    const userData = JSON.parse(localStorage.getItem("user")); // Simpan data user di localStorage setelah login
-    if (userData) {
-      setIsLoggedIn(true); // Jika user data ada, set status login ke true
-      setUser(userData); // Simpan data user di state
-    }
+    // const userData = JSON.parse(localStorage.getItem("user")); // Simpan data user di localStorage setelah login
+    // if (userData) {
+    //   setIsLoggedIn(true); // Jika user data ada, set status login ke true
+    //   setUser(userData); // Simpan data user di state
+    // }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, [handleScroll]);
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   return (
-    <nav className={`fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 shadow-md transition-transform duration-300 ease-in-out ${
-        hidden ? "-translate-y-full" : "translate-y-0"}`}>
+    <nav
+      className={`fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 shadow-md transition-transform duration-300 ease-in-out ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <img src="/icons/Logo.png" alt="Paw Logo" className="w-[136px]" />
-        </div>
+        <Link href="/" className="relative w-36 aspect-[182.45/100]">
+          <Image
+            src="/icons/Logo.png"
+            alt="Paw Logo"
+            fill
+            style={{ objectFit: "contain" }}
+            draggable="false"
+          />
+        </Link>
 
         <div className="hidden md:flex space-x-[50px] text-[18px]">
-          <Link href="/" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Home</Link>
-          <Link href="/#AddPet" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">My Pet</Link>
-          <Link href="/#Features" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Features</Link>
-          <Link href="/#Galeri" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Gallery</Link>
-          <Link href="/#Artikel" className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">Article</Link>
+          <Link
+            href="/"
+            className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
+            Home
+          </Link>
+          <Link
+            href="/#AddPet"
+            className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
+            My Pet
+          </Link>
+          <Link
+            href="/#Features"
+            className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
+            Features
+          </Link>
+          <Link
+            href="/#Galeri"
+            className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
+            Gallery
+          </Link>
+          <Link
+            href="/#Artikel"
+            className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
+            Article
+          </Link>
         </div>
 
-        <div className="hidden md:flex space-x-[14px] text-[16px]">
-          <Link href="/register">
-            <button className="bg-[#FFBCC3] text-white w-[105px] h-[40px] rounded-[56.76px] hover:font-bold transition-all duration-300 ease-in-out">Daftar</button>
-          </Link>
-          <Link href="/login">
-            <button className="bg-[#FBEBD4] text-[#F3AAB5] w-[105px] h-[40px]  rounded-[56.76px] hover:font-bold transition-all duration-300 ease-in-out">Masuk</button>
-          </Link>
+        {/* Kondisi tombol atau profil */}
+        <div className="hidden md:flex items-center space-x-4 text-[16px]">
+          {user ? (
+            <div className="flex items-center space-x-2">
+              {/* Foto Profil */}
+              <a href="/profile">
+              <img
+                src={user?.profilePicture || "/icons/DefaultProfPic.png"}
+                alt="User Profile"
+                className="w-10 h-10 rounded-full border border-[#FFBCC3]"
+              />
+              </a>
+
+              {/* Username User */}
+              <span className="bg-[#FFBCC3] text-white px-4 py-2 rounded-[56.76px]">
+                {user?.username || "User"}
+              </span>
+
+              <button
+              onClick={handleLogout}
+              className="bg-[#FBEBD4] text-white px-4 py-2 rounded-[56.76px] text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
+              Logout
+              </button>
+              
+            </div>
+          ) : (
+            <>
+              <a
+                href="/signup"
+                className="bg-[#FFBCC3] text-white w-[105px] h-[40px] rounded-[56.76px] flex items-center justify-center hover:font-bold transition-all duration-300 ease-in-out"
+              >
+                Daftar
+              </a>
+              <a
+                href="/login"
+                className="bg-[#FBEBD4] text-[#F3AAB5] w-[105px] h-[40px] rounded-[56.76px] flex items-center justify-center hover:font-bold transition-all duration-300 ease-in-out"
+              >
+                Masuk
+              </a>
+            </>
+          )}
         </div>
 
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-[#F3AAB5]">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>1
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={
+                  menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
+                }
+              />
+            </svg>
+            1
           </button>
         </div>
       </div>
 
       {menuOpen && (
         <div className="md:hidden px-4 py-2 bg-white/90 backdrop-blur-lg space-y-2 text-[16px]">
-          <Link href="/" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Home</Link>
-          <Link href="/#AddPet" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">My Pet</Link>
-          <Link href="/#Features" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Features</Link>
-          <Link href="/#Galeri" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Gallery</Link>
-          <Link href="/#Artikel" className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">Article</Link>
+          <Link
+            href="/"
+            className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">
+            Home
+          </Link>
+          <Link
+            href="/#AddPet"
+            className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">
+            My Pet
+          </Link>
+          <Link
+            href="/#Features"
+            className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">
+            Features
+          </Link>
+          <Link
+            href="/#Galeri"
+            className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">
+            Gallery
+          </Link>
+          <Link
+            href="/#Artikel"
+            className="block py-2 text-[#F3AAB5] hover:font-bold transition-all duration-300 ease-in-out">
+            Article
+          </Link>
         </div>
       )}
     </nav>
