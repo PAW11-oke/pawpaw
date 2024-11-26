@@ -8,10 +8,10 @@ export async function POST(req) {
     try {
       // Periksa autentikasi
 
-    //   const authResult = await authMiddleware(req);
-    //   if (!authResult || authResult.status === 401) {
-    //     return new Response("Unauthorized", { status: 401 });
-    //   }
+      const authResult = await authMiddleware(req);
+      if (!authResult || authResult.status === 401) {
+        return new Response("Unauthorized", { status: 401 });
+      }
   
       // Sambungkan ke database
       await connectToDatabase();

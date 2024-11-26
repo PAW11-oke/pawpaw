@@ -7,17 +7,29 @@ import apiService from "@/helper/API/services";
 
 const AuthContext = createContext();
 
+const auth_data_present = {
+    user_id: "user1",
+    email: "email@gmail.com",
+    password: "secret",
+    foto: "/DefaultProfilePicture.png",
+    username: "pawrent",
+  };
+
+  const auth_data_null = undefined;
+
+
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({
-        username: null,
-        profilePicture: null,
-    }) // State untuk menyimpan data user
+    const [user, setUser] = useState({auth_data_present}) // State untuk menyimpan data user
 
     const login = (user) => { setUser(user);};
   
     const logout = () => {
       setUser(null); // Hapus data user dari state
     };
+
+    const updateUser = (updatedData) => {
+        setUser((prevUser) => ({ ...prevUser, ...updatedData }));
+      };
     
     // [loading, setLoading] = useState(true);
     // const router = useRouter();
@@ -194,7 +206,7 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
-                setUser,
+                setUser: updateUser,
                 login,
                 logout
             }}

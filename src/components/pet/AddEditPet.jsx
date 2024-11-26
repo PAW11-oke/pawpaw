@@ -9,6 +9,7 @@ import Image from "next/image";
 import { MdOutlineSave } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuPencilLine } from "react-icons/lu";
+import { useAuth } from "@/context/AuthContext";
 
 const newPet = {
   pet_id: "",
@@ -22,19 +23,24 @@ const newPet = {
 };
 
 const AddEditPet = ({ petType, petId }) => {
+  const authContext = useAuth();
   const petContext = usePet();
   const router = useRouter();
   const isEdit = petId !== "new";
   const [petData, setPetData] = useState(
     isEdit
       ? { ...petContext?.pets.find((p) => p.pet_id === petId) }
-      : { ...newPet, pet_id: `pet_${Date.now()}`, tipe: petType } || {}
+      : {
+          ...newPet,
+          pet_id: `pet_${Date.now()}`,
+          user_id: authContext?.user?.user_id || "",
+          tipe: petType,
+        }
   );
 
   const isValid = () => {
-    // Check if all required fields are filled
-    const { nama, tanggal_lahir, umur, breed } = petData;
-    return nama && tanggal_lahir && umur && breed;
+    const { foto } = petData;
+    return foto && foto !== "/pet_detail/input_activity_foto_placeholder.png";
   };
 
   const handleChange = (e) => {
@@ -48,9 +54,10 @@ const AddEditPet = ({ petType, petId }) => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
     if (!isValid()) {
-      alert("Please fill in all required fields!");
+      alert("Tolong tambahkan foto pet anda");
       return;
     }
 
@@ -76,8 +83,8 @@ const AddEditPet = ({ petType, petId }) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        setPetData((prev) => ({ ...prev, foto: reader.result }));
+      reader.onload = (event) => {
+        setPetData((prev) => ({ ...prev, foto: event.target.result }));
       };
       reader.readAsDataURL(file);
     }
@@ -100,113 +107,125 @@ const AddEditPet = ({ petType, petId }) => {
             )}
           </div>
 
-          <p className="text-base text-[#475569]">
+          <p className="text-base text-[#475569] ">
             Isi form berikut untuk menambahkan hewan peliharaan kesayangan Anda.
           </p>
         </>
 
-        {/* Foto */}
-        <p className="text-gray-700 font-bold -mb-2">Tambahkan Foto </p>
-        <div className="relative">
-          <label htmlFor="profilePhotoInput" className="cursor-pointer">
-            <div className="relative w-72 aspect-square rounded-3xl object-cover overflow-clip">
-              <Image
-                src={petData.foto}
-                alt="Pet Photo"
-                fill
-                style={{ objectFit: "cover" }}
-                draggable="false"
-              />
-            </div>
-            <div className="absolute -bottom-4 -right-4 bg-white rounded-full p-1 border-2 border-gray-300">
-              <LuPencilLine className="text-pink-main text-4xl" />
-            </div>
-          </label>
-          <input
-            id="profilePhotoInput"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handlePhotoChange}
-          />
-        </div>
+        <form
+          onSubmit={handleSave}
+          className="flex flex-col items-start gap-y-4 w-full">
+          {/* Foto */}
+          <p className="text-gray-700 font-bold -mb-2">Tambahkan Foto </p>
+          <div className="relative">
+            <label htmlFor="profilePhotoInput" className="cursor-pointer">
+              <div className="relative w-72 aspect-square rounded-3xl object-cover overflow-clip">
+                <Image
+                  src={petData.foto}
+                  alt="Pet Photo"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  draggable="false"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 bg-white rounded-full p-1 border-2 border-gray-300">
+                <LuPencilLine className="text-pink-main text-4xl" />
+              </div>
+            </label>
+            <input
+              id="profilePhotoInput"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handlePhotoChange}
+            />
+          </div>
 
-        {/* Nama Peliharaan */}
-        <div className="w-full">
-          <label htmlFor="nama" className="block text-gray-700 font-bold mb-2">
-            Nama Peliharaan:
-          </label>
-          <input
-            id="nama"
-            name="nama"
-            type="text"
-            value={petData.nama}
-            onChange={handleChange}
-            placeholder="Nama Peliharaan"
-            className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
-          />
-        </div>
+          {/* Nama Peliharaan */}
+          <div className="w-full">
+            <label
+              htmlFor="nama"
+              className="block text-gray-700 font-bold mb-2">
+              Nama Peliharaan:
+            </label>
+            <input
+              id="nama"
+              name="nama"
+              type="text"
+              value={petData.nama}
+              onChange={handleChange}
+              placeholder="Nama Peliharaan"
+              required
+              className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
+            />
+          </div>
 
-        {/* Tanggal Lahir */}
-        <div className="w-full">
-          <label
-            htmlFor="tanggal_lahir"
-            className="block text-gray-700 font-bold mb-2">
-            Tanggal Lahir
-          </label>
-          <input
-            id="tanggal_lahir"
-            name="tanggal_lahir"
-            type="date"
-            value={
-              petData.tanggal_lahir
-                ? new Date(petData.tanggal_lahir).toISOString().split("T")[0]
-                : ""
-            }
-            onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
-          />
-        </div>
+          {/* Tanggal Lahir */}
+          <div className="w-full">
+            <label
+              htmlFor="tanggal_lahir"
+              className="block text-gray-700 font-bold mb-2">
+              Tanggal Lahir
+            </label>
+            <input
+              id="tanggal_lahir"
+              name="tanggal_lahir"
+              type="date"
+              value={
+                petData.tanggal_lahir
+                  ? new Date(petData.tanggal_lahir).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
+            />
+          </div>
 
-        {/* Umur */}
-        <div className="w-full">
-          <label htmlFor="umur" className="block text-gray-700 font-bold mb-2">
-            Umur (Tahun)
-          </label>
-          <input
-            id="umur"
-            name="umur"
-            type="text"
-            value={petData.umur}
-            onChange={handleChange}
-            placeholder="Umur"
-            className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
-          />
-        </div>
+          {/* Umur */}
+          <div className="w-full">
+            <label
+              htmlFor="umur"
+              className="block text-gray-700 font-bold mb-2">
+              Umur (Tahun)
+            </label>
+            <input
+              id="umur"
+              name="umur"
+              type="text"
+              value={petData.umur}
+              onChange={handleChange}
+              placeholder="Umur"
+              required
+              className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
+            />
+          </div>
 
-        {/* Breed */}
-        <div className="w-full">
-          <label htmlFor="breed" className="block text-gray-700 font-bold mb-2">
-            Breed
-          </label>
-          <input
-            id="breed"
-            name="breed"
-            type="text"
-            value={petData.breed}
-            onChange={handleChange}
-            placeholder="Breed"
-            className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
-          />
-        </div>
+          {/* Breed */}
+          <div className="w-full">
+            <label
+              htmlFor="breed"
+              className="block text-gray-700 font-bold mb-2">
+              Breed
+            </label>
+            <input
+              id="breed"
+              name="breed"
+              type="text"
+              value={petData.breed}
+              onChange={handleChange}
+              placeholder="Breed"
+              required
+              className="w-full px-4 py-2 border-2 border-gray-300 focus:border-pink-main focus:outline-none rounded-full"
+            />
+          </div>
 
-        {/* Save Button */}
-        <button
-          onClick={handleSave}
-          className="mt-4 w-full flex justify-center items-center gap-x-2 text-white font-bold bg-pink-main rounded-full py-2">
-          Save
-          <MdOutlineSave className="text-lg text-white" />
-        </button>
+          {/* Save Button */}
+          <button className="mt-4 w-full flex justify-center items-center gap-x-2 text-white font-bold bg-pink-main rounded-full py-2">
+            Save
+            <MdOutlineSave className="text-lg text-white" />
+          </button>
+        </form>
       </div>
     </div>
   );

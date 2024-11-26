@@ -93,7 +93,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link
-            href="/#AddPet"
+            href="/pet"
             className="text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
             My Pet
           </Link>
@@ -116,7 +116,7 @@ export default function Navbar() {
 
         {/* Kondisi tombol atau profil */}
         <div className="hidden md:flex items-center space-x-4 text-[16px]">
-          {user ? (
+          {authContext?.user ? (
             <div className="flex items-center space-x-2">
               {/* Foto Profil */}
               <a href="/profile">
@@ -131,13 +131,6 @@ export default function Navbar() {
               <span className="bg-[#FFBCC3] text-white px-4 py-2 rounded-[56.76px]">
                 {user?.username || "User"}
               </span>
-
-              <button
-              onClick={handleLogout}
-              className="bg-[#FBEBD4] text-white px-4 py-2 rounded-[56.76px] text-[#F3AAB5] hover:scale-110 transition-all duration-300 ease-in-out">
-              Logout
-              </button>
-              
             </div>
           ) : (
             <>

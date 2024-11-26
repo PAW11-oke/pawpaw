@@ -1,7 +1,7 @@
 import AddScheduleForm from "@/components/grooming/AddScheduleForm";
 
 const AddEditSchedulePage = async ({ params }) => {
-  const { schedule_id } = params;
+  const { schedule_id } = await params;
 
   return (
     <>

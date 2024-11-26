@@ -5,14 +5,16 @@ import { MdOutlineSave } from "react-icons/md";
 import { LuPencilLine } from "react-icons/lu";
 import { useState } from "react";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
+  const authContext = useAuth();
+  const route = useRouter();
   const [profilePhoto, setProfilePhoto] = useState(
-    "/DefaultProfilePicture.png"
+    authContext?.user.foto || "/DefaultProfilePicture.png"
   );
   const [name, setName] = useState("");
-  const [photoFile, setPhotoFile] = useState(null); // Menyimpan file foto asli
-  const [statusMessage, setStatusMessage] = useState(""); // Untuk feedback
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -28,47 +30,6 @@ const Profile = () => {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!name) {
-      setStatusMessage("Name is required.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("name", name);
-    if (photoFile) {
-      formData.append("photo", photoFile);
-    }
-
-    const token = localStorage.getItem("jwtToken");
-    console.log("Token:", token);
-
-    try {
-      const response = await fetch("/api/profile", {
-        method: "POST",
-        header:{
-          Authorization: `Bearer ${token}`
-        },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        setStatusMessage(`Error: ${error.error}`);
-        return;
-      }
-
-      const data = await response.json();
-      setStatusMessage("Profile updated successfully!");
-      console.log("Updated profile:", data);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      setStatusMessage("Failed to update profile. Please try again.");
-    }
   };
 
   return (
@@ -121,12 +82,12 @@ const Profile = () => {
         </div>
 
         {/* Save button */}
-        <button
-          onClick={handleSubmit}
+        <Link
+          href="/"
           className="w-full flex justify-center items-center gap-x-2 text-white font-bold bg-pink-main rounded-full py-2">
           Save
           <MdOutlineSave className="text-lg text-white" />
-        </button>
+        </Link>
       </div>
     </div>
   );
