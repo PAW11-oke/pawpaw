@@ -76,7 +76,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3030](http://localhost:3030) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Tech Stack
 
@@ -93,3 +93,7 @@ Open [http://localhost:3030](http://localhost:3030) with your browser to see the
 ## Presentasi
 
 [PPT beserta Video](https://drive.google.com/drive/folders/1HXU1JpZOf3sAzLB_NETIudHLOoZtbY9v?usp=sharing)
+
+### Note
+
+[repo Backend](https://github.com/PAW11-oke/pawpaw-be)
