@@ -4,8 +4,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import React, { useState } from "react";
 import { useHealthTracking } from "@/helper/context/HealthTrackingContext";
 import { useRouter } from "next/navigation";
-import { usePet } from "@/context/PetContext";
-import { useAuth } from "@/context/AuthContext";
+import { usePet } from "@/helper/context/PetContext";
+import { useAuth } from "@/helper/context/AuthContext";
 
 const new_tracking = {
   tracking_id: "",

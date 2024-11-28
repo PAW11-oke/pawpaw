@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useSchedule } from "@/helper/context/ScheduleContext";
-import { usePet } from "@/context/PetContext";
+import { usePet } from "@helper/context/PetContext";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@helper/context/AuthContext";
 import Image from "next/image";
 
 const new_schedule = {
