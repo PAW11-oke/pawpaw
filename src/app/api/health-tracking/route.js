@@ -1,6 +1,6 @@
 import { connectToDatabase } from "@/utils/dbConfig";
 import { NextResponse } from "next/server";
-import HealthTracking from "@/models/healthTrackingModel";
+import HealthTracking from "@/models/healthTrackModel";
 import Pet from "@/models/petModel";
 
 export async function GET(req) {

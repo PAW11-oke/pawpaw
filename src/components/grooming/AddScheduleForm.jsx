@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useSchedule } from "@/helper/context/ScheduleContext";
-import { usePet } from "@helper/context/PetContext";
+import { usePet } from "@/helper/context/PetContext";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@helper/context/AuthContext";

@@ -9,7 +9,7 @@ import Image from "next/image";
 import { MdOutlineSave } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuPencilLine } from "react-icons/lu";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/helper/context/AuthContext";
 
 const newPet = {
   pet_id: "",
