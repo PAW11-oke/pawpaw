@@ -5,28 +5,29 @@ import { MdOutlineSave } from "react-icons/md";
 import { LuPencilLine } from "react-icons/lu";
 import { useState } from "react";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/helper/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const Profile = () => {
   const authContext = useAuth();
   const route = useRouter();
   const [profilePhoto, setProfilePhoto] = useState(
-    authContext?.user.foto || "/DefaultProfilePicture.png"
+    authContext?.user.profilePhoto || "/DefaultProfilePicture.png"
   );
   const [name, setName] = useState("");
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhotoFile(file); // Simpan file untuk dikirim ke backend
+      setProfilePhoto(file); // Simpan file untuk dikirim ke backend
       const reader = new FileReader();
       reader.onload = () => {
-        setProfilePhoto(reader.result);
+        setProfilePhoto(reader.result || "/DefaultProfilePicture.png");
       };
       reader.readAsDataURL(file);
     }
   };
+  
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -42,13 +43,18 @@ const Profile = () => {
         <div className="relative">
           <label htmlFor="profilePhotoInput" className="cursor-pointer">
             <div className="relative w-28 aspect-square rounded-full object-cover border-2 border-gray-300">
-              <Image
-                src={profilePhoto}
-                alt="Profile"
-                fill
-                style={{ objectFit: "cover" }}
-                draggable="false"
-              />
+            <Image
+              src={profilePhoto || "/DefaultProfilePicture.png"}
+              alt="Profile"
+              fill
+              style={{ objectFit: "cover" }}
+              draggable="false"
+              onError={(e) => {
+                e.target.src = "/DefaultProfilePicture.png"; // Ganti dengan gambar default jika gagal
+              }}
+            />
+
+
             </div>
             {/* Edit icon */}
             <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 border-2 border-gray-300">

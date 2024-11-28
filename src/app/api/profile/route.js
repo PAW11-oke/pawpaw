@@ -1,5 +1,4 @@
 import { connectToDatabase } from '@/utils/dbConfig';
-import { NextResponse } from 'next/server';
 import User from '@/models/userModel';
 import { authMiddleware } from '@/utils/authMiddleware';
 import { uploadImage } from '@/utils/uploadImage';
@@ -39,11 +38,12 @@ export async function POST(req) {
           );
         }
         photoUrl = uploadResult.secure_url;
+        alert("Photo uploaded successfully!");
       }
   
       // Perbarui atau buat profil pengguna dengan ID khusus
       const updatedProfile = await User.findOneAndUpdate(
-        { _id: '67459fc1a119f82a0b057830' }, // Cari berdasarkan ID
+        { _id: req.userId }, // Cari berdasarkan ID
         {
           name,
           ...(photoUrl && { photoProfile: photoUrl }),

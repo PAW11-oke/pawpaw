@@ -1,26 +1,43 @@
 "use client";
 
-import { useAuth } from "@/helper/context/AuthContext";
+import { useAuth }  from "@/helper/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback, useContext } from "react";
+import { useRouter } from "next/compat/router";
 
 export default function Navbar() {
-  const { user, setUser } = useAuth();  
-
-  // const [user, setUser] = useState(null);
-
-  // const { showToast } = useToast();
-  // const { user, logout } = useAuth(); // Ambil user dan logout dari context
-  // const [loading, setLoading] = useState(true); // State untuk menangani pemuatan
-
-  const isLoggedIn = !!user; // Variabel untuk mengecek apakah user ada
-  
+  const {authContext, user, logout} = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!user); // Gunakan state untuk login status
   const [menuOpen, setMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hidden, setHidden] = useState(false);
+  const router = useRouter(); // Gunakan router untuk mendeteksi halaman
+
+  useEffect(() => {
+    setIsLoggedIn(!!user); // Perbarui `isLoggedIn` jika `user` berubah
+  }, [user]);
+
+  useEffect(() => {
+    if (!router) return; // Cek apakah router tersedia
+
+    const handleRouteChange = (url) => {
+      if (url === "/login" || url === "/signup") {
+        setIsLoggedIn(false); // Update status login
+      }
+    };
+
+    // Dengarkan perubahan rute hanya jika router siap
+    router.events?.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events?.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router, router?.events]);
 
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch("/api/auth/logout", {
         method: "POST",
@@ -31,7 +48,8 @@ export default function Navbar() {
 
       if (response.ok) {
         window.localStorage.removeItem("user");
-        setUser(null); // Reset user state
+        logout(); // Panggil fungsi logout dari context
+        setIsLoggedIn(false); // Set `isLoggedIn` ke false
         window.location.href = "/login"; // Redirect ke halaman utama
       } else {
         const error = await response.json();
@@ -39,6 +57,8 @@ export default function Navbar() {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -116,12 +136,12 @@ export default function Navbar() {
 
         {/* Kondisi tombol atau profil */}
         <div className="hidden md:flex items-center space-x-4 text-[16px]">
-          {authContext?.user ? (
-            <div className="flex items-center space-x-2">
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-4">
               {/* Foto Profil */}
               <a href="/profile">
               <img
-                src={user?.profilePicture || "/icons/DefaultProfPic.png"}
+                src={authContext?.user.profilePicture || "/icons/DefaultProfPic.png"}
                 alt="User Profile"
                 className="w-10 h-10 rounded-full border border-[#FFBCC3]"
               />
@@ -129,8 +149,15 @@ export default function Navbar() {
 
               {/* Username User */}
               <span className="bg-[#FFBCC3] text-white px-4 py-2 rounded-[56.76px]">
-                {user?.username || "User"}
+                {authContext?.user.username || "User"}
               </span>
+
+              <button
+                onClick={handleLogout}
+                className="bg-[#FBEBD4] text-[#F3AAB5] w-[105px] h-[40px] rounded-[56.76px] flex items-center justify-center hover:font-bold transition-all duration-300 ease-in-out"
+                >
+                Logout
+              </button> 
             </div>
           ) : (
             <>

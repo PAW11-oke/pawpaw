@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/compat/router";
 
 const Login = () => {
-  const { setUser, login } = useAuth();
+  const { setUser, login, authContext } = useAuth();
   const [statusMessage, setStatusMessage] = useState("");
 
   const [formData, setFormData] = useState({
@@ -24,7 +24,6 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [isPasswordRemembered, setIsPasswordRemembered] = useState(false);
-  const router = useRouter();
 
   const handleChange = (e) => {
       const { name, value } = e.target;
@@ -44,25 +43,31 @@ const Login = () => {
         body: JSON.stringify({ email: formData.email, password: formData.password }),
       });
 
+      console.log("Response status:", response.status);
+
       if (response.ok) {
         const data = await response.json();
-        console.log("Login response:", data);
         const { token, user } = data;
 
         if (data.token) {
           // Simpan token ke localStorage atau sessionStorage
           window.localStorage.setItem("jwtToken", data.token);
-          console.log("Token:", localStorage.getItem("jwtToken"));
           setStatusMessage("Profile updated successfully!");
         } else {
           setStatusMessage("Token not provided by the server.");
         }
 
         if (user) {
-          console.log("User logged in:", user);
           login(setUser); // Simpan data user ke context
-          setUser(user.profilePicture); // Simpan data login ke context
-          localStorage.getItem("user", JSON.stringify(user)); // Simpan data user di localStorage setelah login
+
+          if (authContext?.setUser) {
+            authContext.setUser({
+              photoprofile: user.profilePhoto,
+              username: user.username,
+            });
+          }
+
+          alert("Login berhasil!");
           window.location.href = "/"; // Redirect ke halaman utama
         } else {
           alert("User data not found in response!");
@@ -77,8 +82,6 @@ const Login = () => {
       alert("Terjadi kesalahan saat login!");
     }
   };
-  
-  
 
   const handleGoogleLogin = async () => {
     await signIn('google', { callbackUrl: '/chat' });

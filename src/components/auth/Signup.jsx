@@ -38,6 +38,7 @@ const handleSubmit = async (e) => {
         const data = await response.json();
         setMessage(data.message);
         if (data.success) {
+            alert('Sign up success! Check your inbox email to verify, Redirecting to login page...');
             setTimeout(() => window.location.href = '/login', 3000); 
         }
     } catch (error) {

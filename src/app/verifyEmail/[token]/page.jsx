@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 export default function VerifyEmailPage({ params }) {
     const { token } = params; // Ambil token dari URL
