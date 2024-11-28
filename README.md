@@ -97,3 +97,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Note
 
 [repo Backend](https://github.com/PAW11-oke/pawpaw-be)
+
+### Deployment Webapp link
+
+[pawpaw](https://pawpaw-dzm4pni6b-iqbalrsyds-projects.vercel.app/)
